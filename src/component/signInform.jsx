@@ -7,6 +7,8 @@ export default function SignInForm() {
     password: "",
   });
   const [error, setError] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [apiMessage, setApiMessage] = useState("");
 
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -31,7 +33,30 @@ export default function SignInForm() {
       setError({});
       console.log("Form submitted successfully");
     }
+
+    setLoading(true);
+    setApiMessage("");
+
+    setTimeout(() => {
+      const isSuccess = Math.random() > 0.5;
+
+      if (isSuccess) {
+        setApiMessage("Login successful ✅");
+
+        // Reset form
+        setUserData({
+          email: "",
+          password: "",
+        });
+      } else {
+        setApiMessage("Invalid credentials ❌");
+      }
+
+      setLoading(false);
+    }, 2000);
   };
+
+  const isFormValid = userData.email && userData.password;
 
   return (
     <div>
@@ -44,6 +69,7 @@ export default function SignInForm() {
             onChange={(e) =>
               setUserData({ ...userData, email: e.target.value })
             }
+            disabled={loading}
           />
           {error?.email && <p style={{ color: "red" }}>{error.email}</p>}
         </div>
@@ -55,11 +81,15 @@ export default function SignInForm() {
             onChange={(e) =>
               setUserData({ ...userData, password: e.target.value })
             }
+            disabled={loading}
           />
           {error?.password && <p style={{ color: "red" }}>{error.password}</p>}
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={!isFormValid || loading}>
+          {loading ? "Loading..." : "Submit"}
+        </button>
+        {apiMessage && <p>{apiMessage}</p>}
       </form>
     </div>
   );
