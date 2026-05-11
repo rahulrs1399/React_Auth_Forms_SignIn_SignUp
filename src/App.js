@@ -12,49 +12,44 @@ import "./styles.css";
 export default function App() {
   const [active, setActive] = useState("signin");
 
-  const handleClick = () => {
-    active === "signin" ? setActive("signin") : setActive("signup");
-  };
   return (
-    <div className="App">
-      <h1>Welcome to My form!</h1>
-      <div
-        style={{ display: "flex", justifyContent: "center", padding: "20px" }}
-      >
-        <div
-          onClick={() => setActive("signin")}
-          style={{
-            paddingRight: "30px",
-            cursor: "pointer",
-            border: active === "signin" ? "2px solid blue" : "2px solid black",
-            background: active === "signin" ? "#ADD8E6" : "none",
-          }}
-        >
-          Sign In
+    <div className="app-container">
+      <div className="auth-card">
+        <h1 className="title">Welcome Back 👋</h1>
+        <p className="subtitle">
+          Practice authentication flow with React forms
+        </p>
+
+        <div className="toggle-container">
+          <button
+            className={`toggle-btn ${active === "signin" ? "active" : ""}`}
+            onClick={() => setActive("signin")}
+          >
+            Sign In
+          </button>
+
+          <button
+            className={`toggle-btn ${active === "signup" ? "active" : ""}`}
+            onClick={() => setActive("signup")}
+          >
+            Sign Up
+          </button>
         </div>
-        <div
-          onClick={() => setActive("signup")}
-          style={{
-            paddingLeft: "30px",
-            cursor: "pointer",
-            border: active === "signup" ? "2px solid blue" : "2px solid black",
-            background: active === "signup" ? "#ADD8E6" : "none",
-          }}
-        >
-          Sign Up
+
+        <div className="form-wrapper">
+          {active === "signin" ? (
+            <SignInForm
+              signInFormControls={signInFormControls}
+              initialSignInFormData={initialSignInFormData}
+            />
+          ) : (
+            <SignUpForm
+              signUpFormControls={signUpFormControls}
+              initialSignUpFormData={initialSignUpFormData}
+            />
+          )}
         </div>
       </div>
-      {active === "signin" ? (
-        <SignInForm
-          signInFormControls={signInFormControls}
-          initialSignInFormData={initialSignInFormData}
-        />
-      ) : (
-        <SignUpForm
-          signUpFormControls={signUpFormControls}
-          initialSignUpFormData={initialSignUpFormData}
-        />
-      )}
     </div>
   );
 }
