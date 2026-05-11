@@ -48,8 +48,8 @@ export default function SignUpForm() {
   const isLengthValid = userData.password.length >= 8;
   const hasUppercase = /[A-Z]/.test(userData.password);
   const hasLowercase = /[a-z]/.test(userData.password);
-  const hasNumber = /[0-9]/.test(userData.password);
   const hasSpecialChar = /[!@#$%^&*]/.test(userData.password);
+  const hasNumber = /[0-9]/.test(userData.password);
 
   const isFormValid =
     userData.email &&
